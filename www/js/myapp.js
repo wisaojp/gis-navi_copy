@@ -49,7 +49,7 @@ function myfuncWebSiteSelect(language){
   console.log("url:" + urlLanguage);
   
   //init();//ここで呼び出し
-  init_map(1,1);//ここで呼び出し
+  init_map(1,1,0);//ここで呼び出し
 }
 
 function init_now() {
@@ -59,6 +59,7 @@ function init_now() {
           function(pos) {
               lat = pos.coords.latitude;
               lng = pos.coords.longitude;
+              geo=1
               init_map(lat, lng, geo);
           },
           function() {
@@ -82,9 +83,8 @@ function init_map(lat, lng, geo) {
 
   map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
   getWindowSize();
-  init_info();
+  init_info(geo);
 }
-
 
 function getWindowSize() {
   var sW,sH;
@@ -93,38 +93,47 @@ function getWindowSize() {
   document.getElementById("map_canvas").style.height = (sH - 113) + 'px';
 }
 
-function init_info() {
+function init_info(geo) {
   var info_canvas = document.getElementById("info_canvas");
 //  info_canvas.innerHTML = "TEST";
-
+  if(geo = 0){　//初期画面から呼び出されたら
   //Ajax通信
-  $.ajax({
-      type: 'GET',
-      url: urlLanguage,
-      dataType: 'json',
-      success: function(json){
-          var len = json.length;
-//          info_canvas.innerHTML = "AED数 " + json.length;
-          for(var i=0; i < len; i++){
-              pos = {
-                  lat: json[i][2],
-                  lng: json[i][3]
-              };
-            
-              var marker = new google.maps.Marker({
-                  position: pos,
-                  map: map
-              });
-              var infowindow = new google.maps.InfoWindow({
-                content: json[i][0]
-              });
-              infowindow.open(map, marker);
-
-          }
-      },
-      //エラー処理
-      error: function(XMLHttpRequest, textStatus, errorThrown) {
-          alert(textStatus);
-      }
-  });
+    $.ajax({
+        type: 'GET',
+        url: urlLanguage,
+        dataType: 'json',
+        success: function(json){
+            var len = json.length;
+            for(var i=0; i < len; i++){
+                pos = {
+                    lat: json[i][2],
+                    lng: json[i][3]
+                };
+              
+                var marker = new google.maps.Marker({
+                    position: pos,
+                    map: map
+                });
+                var infowindow = new google.maps.InfoWindow({
+                  content: json[i][0]
+                });
+                infowindow.open(map, marker);
+            }
+        },
+        //エラー処理
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert(textStatus);
+        }
+    });
+  }
+  else{ //ボタンから呼び出されたら
+    var marker = new google.maps.Marker({
+      position: pos,
+      map: map
+    });
+    var infowindow = new google.maps.InfoWindow({
+      content: json[i][0]
+    });
+    infowindow.open(map, marker); 
+  } 
 }
