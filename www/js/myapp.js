@@ -48,31 +48,29 @@ function myfuncWebSiteSelect(language){
   urlLanguage = 'data/'+url+'.json';
   console.log("url:" + urlLanguage);
   
-  init();//ここで呼び出し
+  //init();//ここで呼び出し
+  init_map(1,1);//ここで呼び出し
 }
 
-
-
-function init() {
+function init_now() {
   if (navigator.geolocation) {
       // 現在の位置情報取得
       navigator.geolocation.getCurrentPosition(
           function(pos) {
               lat = pos.coords.latitude;
               lng = pos.coords.longitude;
-              init_map(lat, lng);
+              init_map(lat, lng, geo);
           },
           function() {
-              init_map(lat, lng);
+              init_map(lat, lng, geo);
           }
       );
   } else {
       "位置情報を設定してください";
   }
-
 }
 
-function init_map(lat, lng) {
+function init_map(lat, lng, geo) {
   var mapOptions = {
       //中心地設定
       center: new google.maps.LatLng(lat, lng),
