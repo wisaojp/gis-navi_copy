@@ -14,8 +14,7 @@ function onDeviceReady() {
   );
 }
 
-var map, urlLanguage;
-
+var map, urlLanguage,pos;
 
 function myfuncWebSiteSelect(language){
   let langCheck, result;
@@ -49,29 +48,30 @@ function myfuncWebSiteSelect(language){
   console.log("url:" + urlLanguage);
   
   //init();//ここで呼び出し
-  init_map(1,1,0);//ここで呼び出し
+  init_map(0);//ここで呼び出し
 }
 
 function init_now() {
   if (navigator.geolocation) {
       // 現在の位置情報取得
-      navigator.geolocation.getCurrentPosition(
-          function(pos) {
-              lat = pos.coords.latitude;
-              lng = pos.coords.longitude;
-              geo=1
-              init_map(lat, lng, geo);
-          },
-          function() {
-              init_map(lat, lng, geo);
-          }
-      );
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        lat = pos.coords.latitude;
+        lng = pos.coords.longitude;
+        geo = 1;//現在地をさす場合
+        pos = {lat, lng};
+        init_map(geo);
+      },
+      function() {
+        init_map(geo);
+      }
+    );
   } else {
       "位置情報を設定してください";
   }
 }
 
-function init_map(lat, lng, geo) {
+function init_map(geo) {
   var mapOptions = {
       //中心地設定
       center: new google.maps.LatLng(lat, lng),
