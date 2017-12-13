@@ -51,15 +51,13 @@ function myfuncWebSiteSelect(language){
   init();//ここで呼び出し
 }
 
-
-
 function init() {
   if (navigator.geolocation) {
       // 現在の位置情報取得
       navigator.geolocation.getCurrentPosition(
           function(pos) {
-              lat = pos.coords.latitude;
-              lng = pos.coords.longitude;
+              lat = 0;
+              lng = 0;
               init_map(lat, lng);
           },
           function() {
@@ -69,7 +67,6 @@ function init() {
   } else {
       init_map(lat, lng);
   }
-
 }
 
 function init_map(lat, lng) {
@@ -97,7 +94,6 @@ function getWindowSize() {
 
 function init_info() {
   var info_canvas = document.getElementById("info_canvas");
-//  info_canvas.innerHTML = "TEST";
 
   //Ajax通信
   $.ajax({
@@ -105,22 +101,19 @@ function init_info() {
       url: urlLanguage,
       dataType: 'json',
       success: function(json){
-          var len = json.length;
-//          info_canvas.innerHTML = "AED数 " + json.length;
-          for(var i=0; i < len; i++){
-              pos = {
-                  lat: json[i][2],
-                  lng: json[i][3]
-              };
-              var marker = new google.maps.Marker({
-                  position: pos,
-                  map: map
-              });
-              var infowindow = new google.maps.InfoWindow({
-                content: json[i][0]
-              });
-              infowindow.open(map, marker);
-          }
+
+        pos = {
+            lat: json[0][2],
+            lng: json[0][3]
+        };
+        var marker = new google.maps.Marker({
+            position: pos,
+            map: map
+        });
+        var infowindow = new google.maps.InfoWindow({
+          content: json[0][0]
+        });
+        infowindow.open(map, marker);
       },
       //エラー処理
       error: function(XMLHttpRequest, textStatus, errorThrown) {
