@@ -101,19 +101,21 @@ function init_info() {
       url: urlLanguage,
       dataType: 'json',
       success: function(json){
-
-        pos = {
+        var len = json.length;
+        for(var i=0; i < len; i++){
+          pos = {
             lat: json[0][2],
             lng: json[0][3]
-        };
-        var marker = new google.maps.Marker({
+          };
+          var marker = new google.maps.Marker({
             position: pos,
             map: map
-        });
-        var infowindow = new google.maps.InfoWindow({
-          content: json[0][0]
-        });
-        infowindow.open(map, marker);
+          });
+          var infowindow = new google.maps.InfoWindow({
+            content: json[0][0]
+          });
+          infowindow.open(map, marker);
+        }
       },
       //エラー処理
       error: function(XMLHttpRequest, textStatus, errorThrown) {
