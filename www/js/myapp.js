@@ -102,17 +102,17 @@ function init_info() {
       dataType: 'json',
       success: function(json){
         var len = json.length;
-        for(var i=0; i < len; i++){
+        for(var i=0; i < len; i++){//複数登録するのでfor
           pos = {
-            lat: json[0][2],
-            lng: json[0][3]
+            lat: json[i][2],
+            lng: json[i][3]
           };
           var marker = new google.maps.Marker({
             position: pos,
             map: map
           });
           var infowindow = new google.maps.InfoWindow({
-            content: json[0][0]
+            content: json[i][0]
           });
           infowindow.open(map, marker);
         }
