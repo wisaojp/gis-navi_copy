@@ -111,8 +111,15 @@ function init_info() {
             position: pos,
             map: map
           });
+          
+          
           var infowindow = new google.maps.InfoWindow({
-            content: json[i][0]
+            content:"<div><button onclick='myFunction()'>Click me</button></div>"
+            //"<a href='https://yahoo.com' onclick=\"cordova.InAppBrowser.open('http://yahoo.com','_blank', '');\">yahoo</a>"
+            //"<div><script language='JavaScript' type='text/javascript'>function openWin(){newWin = window.open('http://www.yahoo.co.jp/','sampleWin','width=400,height=300,scrollbars=no,status=no,toolbar=no,location=no,menubar=no,resizable=yes');'newWin.focus();'"
+              //  "<div><a href=" + json[i][0] + "height=500,>THE JUNEI HOTEL(ja)</a></div>"
+            //<a href="./window.html" onclick="window.open('./window.html', '', 'width=500,height=400'); return false;">新しいウィンドウ</a>
+            //
           });
           infowindow.open(map, marker);
         }
@@ -122,4 +129,9 @@ function init_info() {
           alert(textStatus);
       }
   });
+}
+
+function myFunction(){
+  //window.open("http://yahoo.com", "", "width=500,height=500");
+  cordova.InAppBrowser.open('http://yahoo.com','_system', '');
 }
