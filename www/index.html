@@ -17,32 +17,83 @@
       console.log("Onsen UI is ready!");
     });
 
+    document.addEventListener('show', function(event) {
+      var page = event.target;
+      var titleElement = document.querySelector('#toolbar-title');
 
+      if (page.matches('#first-page')) {
+        titleElement.innerHTML = 'My app - Page 1';
+      } else if (page.matches('#second-page')) {
+        titleElement.innerHTML = 'My app - Page 2';
+      } else if (page.matches('#third-page')) {
+        titleElement.innerHTML = 'My app - Page 3';
+      }
+    });
   </script>
   
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwXGUsX2Eao3ugRTllaTbDs0ElBi7Mj5k" type="text/javascript" charset="UTF-8"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
 
   <script src="js/myapp.js"></script>
+  <script src="js/geolocation.js"></script>
 </head>
 <body>
 
   <ons-page>
+    <ons-toolbar>
+      <div class="center" id="toolbar-title"></div>
+    </ons-toolbar>
     <ons-tabbar position="auto">
       <ons-tab icon="fa-globe" page="tab1.html" active>
+      </ons-tab>
+      <ons-tab icon="gear" page="tab4.html">
       </ons-tab>
     </ons-tabbar>
   </ons-page>
 </ons-template>
 
-  <ons-template id="tab1.html"><!--旅館-->
+  <ons-template id="tab1.html">
     <ons-page id="first-page">
       <p style="text-align: center;">
-
+        <ons-button onclick = "getCurrentPosition()">
+          <i class="fa fa-compass" aria-hidden="true"></i>
+        </ons-button>
          <div id="map_canvas" style="width:100%; height:100%"></div>
       </p>
     </ons-page>
-  </ons-template>  
+  </ons-template>
+
+  <ons-template id="tab2.html">
+    <ons-page id="second-page">
+      <p style="text-align: center;">
+        <div id="map_canvas" style="width:100%; height:100%"></div>
+      </p>
+    </ons-page>
+  </ons-template>
+  
+  <ons-template id="tab3.html">
+    <ons-page id="third-page">
+      <p style="text-align: center;">
+        This is the third page.test
+        test
+      </p>
+    </ons-page>
+  </ons-template>
+  
+  <ons-template id="tab4.html">
+    <ons-page id="forth-page">
+    
+      <ons-list>
+    
+
+            <ons-list-item tappable>
+          <div class="center">
+            <ons-icon icon="file-text" class="list-item__icon"></ons-icon>
+          </div>
+        </ons-list-item>
+      </ons-list>
+    </ons-page>
+  </ons-template>
 
 </body>
 </html>

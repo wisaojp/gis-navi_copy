@@ -26,7 +26,7 @@ function myfuncWebSiteSelect(language){
       result = language.substring(0, 7);
   }
   else{　//それ以外の場合はlangcheckの値そのまま
-    result = langCheck;
+    result=langCheck;
   }
     
   //言語による条件分岐
@@ -80,7 +80,6 @@ function init_map(lat, lng) {
   };
 
   map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
-  //map = new google.maps.Map(document.getElementById("map_canvas_conveni"),mapOptions);
   getWindowSize();
   init_info();
 }
@@ -91,7 +90,6 @@ function getWindowSize() {
   sW = window.innerWidth;
   sH = window.innerHeight;
   document.getElementById("map_canvas").style.height = (sH - 113) + 'px';
-  //document.getElementById("map_canvas_conveni").style.height = (sH - 113) + 'px';
 }
 
 function init_info() {
@@ -114,12 +112,14 @@ function init_info() {
             map: map
           });
           
-          url=json[i][0];//urlはJson[i][0]
           
           var infowindow = new google.maps.InfoWindow({
-            content:"<div><button onclick='myFunction()'>" + json[i][1] + "</button><div>"
-            //"<div><a href=\"https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194>"+
-            //"https://en.wikipedia.org/w/index.php?title=Uluru</a></div>"
+            content:"<div><button onclick='myFunction()'>Click me</button></div>"
+            //"<a href='https://yahoo.com' onclick=\"cordova.InAppBrowser.open('http://yahoo.com','_blank', '');\">yahoo</a>"
+            //"<div><script language='JavaScript' type='text/javascript'>function openWin(){newWin = window.open('http://www.yahoo.co.jp/','sampleWin','width=400,height=300,scrollbars=no,status=no,toolbar=no,location=no,menubar=no,resizable=yes');'newWin.focus();'"
+              //  "<div><a href=" + json[i][0] + "height=500,>THE JUNEI HOTEL(ja)</a></div>"
+            //<a href="./window.html" onclick="window.open('./window.html', '', 'width=500,height=400'); return false;">新しいウィンドウ</a>
+            //
           });
           infowindow.open(map, marker);
         }
@@ -133,5 +133,5 @@ function init_info() {
 
 function myFunction(){
   //window.open("http://yahoo.com", "", "width=500,height=500");
-  cordova.InAppBrowser.open(url,'_system', '');
+  cordova.InAppBrowser.open('http://yahoo.com','_system', '');
 }
