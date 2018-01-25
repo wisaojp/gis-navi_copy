@@ -14,11 +14,11 @@ function onDeviceReady() {
   );
 }
 
-var map, urlLanguage;
+var map, urlLanguage, URL;
 
 
 function myfuncWebSiteSelect(language){
-  let langCheck, result;
+  var langCheck, result, url;
   
   langCheck = language.substring(0, 2);//左2文字を取り出す
   
@@ -87,8 +87,8 @@ function init_map(lat, lng) {
 
 function getWindowSize() {
   var sW,sH;
-  sW = window.innerWidth;
-  sH = window.innerHeight;
+  sW = window.innerWidth;//ウィンドウ幅を取得
+  sH = window.innerHeight;//ウインドウ高さを取得
   document.getElementById("map_canvas").style.height = (sH - 113) + 'px';
 }
 
@@ -97,41 +97,44 @@ function init_info() {
 
   //Ajax通信
   $.ajax({
-      type: 'GET',
-      url: urlLanguage,
-      dataType: 'json',
-      success: function(json){
-        var len = json.length;
-        for(var i=0; i < len; i++){//複数登録するのでfor
-          pos = {
-            lat: json[i][2],
-            lng: json[i][3]
-          };
-          var marker = new google.maps.Marker({
-            position: pos,
-            map: map
-          });
-          
-          
-          var infowindow = new google.maps.InfoWindow({
-            content:"<div><button onclick='myFunction()'>Click me</button></div>"
-            //"<a href='https://yahoo.com' onclick=\"cordova.InAppBrowser.open('http://yahoo.com','_blank', '');\">yahoo</a>"
-            //"<div><script language='JavaScript' type='text/javascript'>function openWin(){newWin = window.open('http://www.yahoo.co.jp/','sampleWin','width=400,height=300,scrollbars=no,status=no,toolbar=no,location=no,menubar=no,resizable=yes');'newWin.focus();'"
-              //  "<div><a href=" + json[i][0] + "height=500,>THE JUNEI HOTEL(ja)</a></div>"
-            //<a href="./window.html" onclick="window.open('./window.html', '', 'width=500,height=400'); return false;">新しいウィンドウ</a>
-            //
-          });
-          infowindow.open(map, marker);
-        }
-      },
-      //エラー処理
-      error: function(XMLHttpRequest, textStatus, errorThrown) {
-          alert(textStatus);
+    type: 'GET',
+    url: urlLanguage,
+    dataType: 'json',
+    
+    success: function(json){
+      var len = json.length;
+      
+      for(var i=0; i < len; i++){//複数登録するのでfor
+        pos = {
+          lat: json[i][2],
+          lng: json[i][3]
+        };
+        var marker = new google.maps.Marker({
+          position: pos,
+          map: map
+        });
+        URL = json[i][0];                    
+        var infowindow = new google.maps.InfoWindow({
+          content:"<div><button onclick='myFunction()'>THE JUNEI HOTEL</button></div>"
+            //content:"<div><a href=" + json[i][0] + "height=500,>THE JUNEI HOTEL</a></div>"
+        });
+        infowindow.open(map, marker);
       }
+      
+    },
+      //エラー処理
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+      alert(textStatus);
+    }
   });
 }
 
 function myFunction(){
   //window.open("http://yahoo.com", "", "width=500,height=500");
-  cordova.InAppBrowser.open('http://yahoo.com','_system', '');
+  cordova.InAppBrowser.open(URL,'_system', '');
 }
+
+function msg(){
+  alert("ようこそ！！");
+}
+

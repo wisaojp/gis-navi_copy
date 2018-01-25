@@ -1,8 +1,7 @@
 /**/
 
 #map_canvas {
-    border: 1px solid #999;
-    background-color: #CCF;
+    border: 1px solid #000;
     width:100%;
     height: 500px;
 }
